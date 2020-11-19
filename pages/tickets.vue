@@ -7,10 +7,37 @@
       <div>
         <h1 class="title">Choose your dream destination...</h1>
         <div class="links">
-            <nuxt-link  v-for="value in tickets" :key="value.flight" :to="{name: 'monTicket', params: {class: value.class, from: value.from, to: value.to}}">
-                <a class="giant-button">{{ value.class }} - {{ value.from }} - {{ value.to }}  </a>                              
-            </nuxt-link>
+            <li class="giant-button" v-for="value in tickets" :key="value.flight" @click="selectTicket(value)">
+                <a>{{ value.class }} - {{ value.from }} - {{ value.to }}  </a>                              
+            </li>
         </div>
+      </div>
+      <div v-if="selectedTicket != null" class="Ticket" style="height:500px; width: 1000px;">
+          <div style="height:100px; width: 1000px; background-color: #5dbcd2;">              
+              <h3 style="opacity: 0.50">{{selectedTicket.flight}}</h3>
+              <br/>
+              <h2>{{selectedTicket.class}}</h2>
+          </div>
+          <div style="height:350px; width: 1000px; background-color: white;">
+              <h2>
+                  Passenger  : {{selectedTicket.passenger}}
+                  <br/>
+                  <br/>
+                  FROM  : {{selectedTicket.from}}
+                  <br/>
+                  TO : {{selectedTicket.to}}
+                  <br/>
+                  <br/>
+                  CLASS : {{selectedTicket.class}} 
+                  <br/>
+                  GATE : {{selectedTicket.gate}}  
+                  <br/>
+                  TIME : {{selectedTicket.time}}   
+                  <br/>
+                  SEAT : {{selectedTicket.seat}}
+              </h2>
+          </div>
+          <div style="height:50px; width: 1000px; background-color: #5dbcd2;"></div>
       </div>
     </div>
   </div>
@@ -20,19 +47,31 @@
 import { vue } from "vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
+
+  data() {
+    return {
+      selectedTicket: null
+    }
+  },
     computed: {
         ...mapGetters({
             tickets: "destination/getTicket",
     }),
   },
-  methods: {
+    methods: {
+    selectTicket: function(ticket)
+    {
+      this.selectedTicket = ticket;
+      console.log(this.selectedTicket);
+    },
     ...mapActions({
       loadTicket: "destination/loadTicket"
     }),
   },
-  mounted() {
-    this.loadTicket(this.$route.params.code);
-  },
+    mounted() {
+    this.loadTicket(this.$route.params.code);    
+  }
+  
   
 }
 </script>
