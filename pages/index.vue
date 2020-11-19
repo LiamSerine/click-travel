@@ -7,7 +7,9 @@
       <div>
         <h1 class="title">Choose your dream destination...</h1>
         <div class="links">
-          <a href="#" class="giant-button" v-for="value in destinationsReves" :key="value.code">{{ value.name }}</a>
+          <nuxt-link  v-for="value in destinationsReves" :key="value.code" :to="{name: 'tickets', params: {code: value.code}}">
+            <a class="giant-button">{{ value.name }}</a>
+          </nuxt-link>          
         </div>
       </div>
     </div>
@@ -24,7 +26,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadDestination: "destination/loadDestination",
+      loadDestination: "destination/loadDestination"
     }),
   },
   mounted() {

@@ -1,3 +1,4 @@
 export default () => ({
-    destinations: []
+    destinations: [],
+    tickets: []
 })
