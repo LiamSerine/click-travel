@@ -7,10 +7,7 @@
       <div>
         <h1 class="title">Choose your dream destination...</h1>
         <div class="links">
-          <a href="#" class="giant-button"> San Francisco, USA </a>
-          <a href="#" class="giant-button"> Québec, Canada </a>
-          <a href="#" class="giant-button"> Bora Bora, Polynésie </a>
-          <a href="#" class="giant-button"> Torres del Paine, Chile </a>
+          <a href="#" class="giant-button" v-for="value in destinationsReves" :key="value.code">{{ value.name }}</a>
         </div>
       </div>
     </div>
@@ -18,7 +15,22 @@
 </template>
 
 <script>
-export default {}
+import { mapGetters, mapActions } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      destinationsReves: "destination/getDestinations",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      loadDestination: "destination/loadDestination",
+    }),
+  },
+  mounted() {
+    this.loadDestination();
+  },
+}
 </script>
 
 <style lang="scss">
